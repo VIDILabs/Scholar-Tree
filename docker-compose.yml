@@ -2,17 +2,18 @@ version: "3.9"
 services:
   web:
     build: .
-    command: python manage.py runserver 127.0.0.1:8080
+    command: python manage.py runserver 127.0.0.1:8000
     volumes:
       - .:/app
+    network_mode: host
     ports:
-      - "8080:80" # change in production environment
+      - "8000:8000" # change in production environment - kwon might use this one
     depends_on: # to control startup order
       - db
   db:
     image: mysql
     ports:
-      - "3306:3306"
+      - "3306:3306" # think about 'expose' - then mysql is only avail through linked services like 'web'
     environment:
       - MYSQL_ROOT_PASSWORD=vidim
       - MYSQL_DATABASE=dblp_behaviors
