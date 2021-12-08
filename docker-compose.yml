@@ -2,16 +2,17 @@ version: "3.9"
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 127.0.0.1:8080
     volumes:
       - .:/app
     ports:
       - "8080:80" # change in production environment
-    # depends_on:
-    #   - db
+    depends_on: # to control startup order
+      - db
   db:
     image: mysql
+    ports:
+      - "3306:3306"
     environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - MYSQL_ROOT_PASSWORD=vidim
+      - MYSQL_DATABASE=dblp_behaviors

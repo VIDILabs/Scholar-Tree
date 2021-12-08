@@ -34,7 +34,7 @@ TEMPLATE_DIRS = (
 )
 
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'tlfung.cs.ucdavis.edu']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # ALLOWED_INCLUDE_ROOTS = ['*']
 
 # Application definition

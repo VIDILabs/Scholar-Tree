@@ -19,7 +19,7 @@ class DB:
   conn = None
   def connect(self):
     # self.conn = MySQLdb.connect(host="localhost", user="root", passwd="vidim", db="ctree_eu", use_unicode=True, charset="utf8", cursorclass=MySQLdb.cursors.DictCursor)
-    self.conn = MySQLdb.connect(host="localhost", user="root", passwd="vidim", db="dblp_behaviors", use_unicode=True, charset="utf8", cursorclass=MySQLdb.cursors.DictCursor)
+    self.conn = MySQLdb.connect(host="localhost", port = 3306, user="root", passwd="vidim", db="dblp_behaviors", use_unicode=True, charset="utf8", cursorclass=MySQLdb.cursors.DictCursor)
   def query(self, sql):
     try:
       cursor = self.conn.cursor()
