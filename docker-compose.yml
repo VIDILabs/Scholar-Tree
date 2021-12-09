@@ -3,9 +3,11 @@ services:
   web:
     build: .
     command: python manage.py runserver 127.0.0.1:8000
-    volumes:
-      - .:/app
-    network_mode: host
+    # volumes:
+    #   - .:/app
+    network_mode: "host"
+    expose:
+      - "8000"
     ports:
       - "8000:8000" # change in production environment - kwon might use this one
     depends_on: # to control startup order
