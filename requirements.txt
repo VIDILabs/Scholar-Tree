@@ -1,3 +1,4 @@
 BeautifulSoup
 django==1.6
 simplejson
+mysqlclient

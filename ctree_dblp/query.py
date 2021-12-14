@@ -53,37 +53,37 @@ def collecting_search(info):
 def check_searching(request):
 	period = []
 	if request.GET.get('researcher'):
-		ori_url = request.GET.get('researcher')
+		xml_url = request.GET.get('researcher')
 		# http://dblp.uni-trier.de/pers/hd/m/Ma:Kwan=Liu
 		# http://dblp.uni-trier.de/pers/xx/m/Ma:Kwan=Liu.xml 
 		# http://dblp.uni-trier.de/pers/hd/s/Shneiderman:Ben
 		# print "request", request
 		# ori_url = ori_url.encode('utf8')
 		# print "ori_url", ori_url
-		if ori_url.find("/hd/") != -1:
-			xml_url = ori_url.replace("/hd/", "/xx/")
-			xml_url += ".xml"
+		
+		#xml_url = ori_url.replace("/hd/", "/xx/")
+		xml_url += ".xml"
 
+		
+		request = Request(xml_url, headers=HEADERS)
+		try:
+			response = urlopen(request)
+			html = response.read()
+			html = html.decode('utf8')
+			soup = Soup(html)
+			all_year = []
+			author = soup.person.author.string
+			# get all the published years
 			
-			request = Request(xml_url, headers=HEADERS)
-			try:
-				response = urlopen(request)
-				html = response.read()
-				html = html.decode('utf8')
-				soup = Soup(html)
-				all_year = []
-				author = soup.person.author.string
-				# get all the published years
-				
-				for y in soup.findAll('year'):
-					if y.string not in all_year:
-						all_year.append(y.string)
-				# print all_year
-				period = [all_year[-1], all_year[0], author]
-			except Exception:
-				period = [-1]
-		else:
+			for y in soup.findAll('year'):
+				if y.string not in all_year:
+					print('Adding year', y.string)
+					all_year.append(y.string)
+			# print all_year
+			period = [all_year[-1], all_year[0], author]
+		except Exception:
 			period = [-1]
+
 	else:
 		raise Http404
 

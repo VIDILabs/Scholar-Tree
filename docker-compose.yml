@@ -1,17 +1,5 @@
 version: "3.9"
 services:
-  web:
-    build: .
-    command: python manage.py runserver 127.0.0.1:8000
-    # volumes:
-    #   - .:/app
-    network_mode: "host"
-    expose:
-      - "8000"
-    ports:
-      - "8000:8000" # change in production environment - kwon might use this one
-    depends_on: # to control startup order
-      - db
   db:
     image: mysql
     ports:
@@ -19,3 +7,12 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=vidim
       - MYSQL_DATABASE=dblp_behaviors
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000" # change in production environment - kwon might use this one
+    depends_on: # to control startup order
+      - db
