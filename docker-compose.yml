@@ -2,17 +2,24 @@ version: "3.8"
 services:
   db:
     image: mysql
-    ports:
-      - "3306:3306" # think about 'expose' - then mysql is only avail through linked services like 'web'
+    platform: linux/x86_64
+    networks:
+      - infovisnet
     environment:
       - MYSQL_ROOT_PASSWORD=vidim
       - MYSQL_DATABASE=dblp_behaviors
   web:
+    container_name: scholartree
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:80
     volumes:
       - .:/code
-    ports:
-      - "8000:8000" # change in production environment - kwon might use this one
+    networks:
+      - infovisnet
     depends_on: # to control startup order
       - db
+
+
+networks:
+  infovisnet:
+    name: infovisnet
